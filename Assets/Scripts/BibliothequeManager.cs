@@ -201,13 +201,46 @@ public class BibliothequeManager : MonoBehaviour // Déclaration de la classe Bib
 
     public void RechercherLivre()
     {
-        var resultats = bibliotheque.RechercherLivre(titreInput.text); // On appelle la méthode RechercherLivre de la sous classe bibliotheque
-        affichageText.text = ""; // Dans la zone de texte, on affiche d'abord un espace vide
-        foreach (var livre in resultats) // Puis pour chaque livre correspondant au résultat
+        // On récupère les entrées utilisateur pour chaque critère de recherche
+        string titre = titreInput.text;
+        string auteur = auteurInput.text;
+        string anneeTexte = anneeInput.text;
+
+        // Réinitialise le texte d'affichage
+        affichageText.text = "";
+
+        // Recherche par titre
+        if (!string.IsNullOrEmpty(titre))
         {
-            affichageText.text += livre.Afficher() + "\n"; // On ajoute dans la zone de texte le livre en question
+            var resultatsTitre = bibliotheque.RechercherLivre(titre);
+            foreach (var livre in resultatsTitre)
+            {
+                affichageText.text += livre.Afficher() + "\n";
+            }
+        }
+
+        // Recherche par auteur
+        if (!string.IsNullOrEmpty(auteur))
+        {
+            var resultatsAuteur = bibliotheque.RechercherLivre(auteur);
+            foreach (var livre in resultatsAuteur)
+            {
+                affichageText.text += livre.Afficher() + "\n";
+            }
+        }
+
+        // Recherche par année
+        if (!string.IsNullOrEmpty(anneeTexte))
+        {
+            var resultatsAnnee = bibliotheque.RechercherLivre(anneeTexte);
+            foreach (var livre in resultatsAnnee)
+            {
+                affichageText.text += livre.Afficher() + "\n";
+            }
         }
     }
+
+
 
     public void AfficherTout() 
     {
